@@ -24,6 +24,8 @@ export type TaskLayoutComponent =
     | 'recurrenceRule'
     | 'createdDate'
     | 'startDate'
+    | 'startTime'
+    | 'totalTime'
     | 'scheduledDate'
     | 'dueDate'
     | 'doneDate'
@@ -42,6 +44,8 @@ export class TaskLayout {
         'recurrenceRule',
         'createdDate',
         'startDate',
+        'startTime',
+        'totalTime',
         'scheduledDate',
         'dueDate',
         'doneDate',

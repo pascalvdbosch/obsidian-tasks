@@ -291,6 +291,8 @@ export class TaskLineRenderer {
         const {
             recurrenceSymbol,
             startDateSymbol,
+            startTimeSymbol,
+            totalTimeSymbol,
             createdDateSymbol,
             scheduledDateSymbol,
             dueDateSymbol,

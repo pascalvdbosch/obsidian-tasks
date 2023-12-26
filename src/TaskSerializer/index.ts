@@ -15,6 +15,8 @@ export type TaskDetails = Writeable<
         | 'description'
         | 'priority'
         | 'startDate'
+        | 'startTime'
+        | 'totalTime'
         | 'createdDate'
         | 'scheduledDate'
         | 'dueDate'
