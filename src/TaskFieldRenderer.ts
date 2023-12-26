@@ -129,6 +129,8 @@ const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     createdDate: new TaskFieldHTMLData('task-created', 'taskCreated', TaskFieldHTMLData.dateAttributeCalculator),
     dueDate: new TaskFieldHTMLData('task-due', 'taskDue', TaskFieldHTMLData.dateAttributeCalculator),
     startDate: new TaskFieldHTMLData('task-start', 'taskStart', TaskFieldHTMLData.dateAttributeCalculator),
+    startTime: new TaskFieldHTMLData('task-start-time', 'taskStartTime', TaskFieldHTMLData.noAttributeValueCalculator),
+    totalTime: new TaskFieldHTMLData('task-total-time', 'taskTotalTime', TaskFieldHTMLData.noAttributeValueCalculator),
     scheduledDate: new TaskFieldHTMLData('task-scheduled', 'taskScheduled', TaskFieldHTMLData.dateAttributeCalculator),
     doneDate: new TaskFieldHTMLData('task-done', 'taskDone', TaskFieldHTMLData.dateAttributeCalculator),
 

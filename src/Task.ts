@@ -408,14 +408,16 @@ export class Task {
                 if (setDoneDate) {
                     newDoneDate = window.moment();
                     const sec = window.moment().diff(window.moment(this.startTime, 'HH:mm'), 'minutes');
-                    newTotalTime = String(Math.floor(sec / 60)).padStart(2, '0') + ":" + String(Math.round(sec % 60)).padStart(2, '0');
+                    if (sec >= 30)
+                        newTotalTime = String(Math.floor(sec / 60)).padStart(2, '0') + ":" + String(Math.round(sec % 60)).padStart(2, '0');
                 }
             } else {
                 // This task was already completed, so preserve its done date.
                 newDoneDate = this.doneDate;
             }
         } else {
-            newStartTime = window.moment().format('HH:mm');
+            if (newStatus.symbol != " ")
+                newStartTime = window.moment().format('HH:mm');
         }
 
         let nextOccurrence: {
