@@ -407,7 +407,7 @@ export class Task {
                 const { setDoneDate } = getSettings();
                 if (setDoneDate) {
                     newDoneDate = window.moment();
-                    const sec = window.moment().diff(window.moment(this.startTime, 'HH:mm'), 'minutes');
+                    const sec = window.moment().diff(window.moment(this.startTime, 'HH:mm'), 'seconds');
                     if (sec >= 30)
                         newTotalTime = String(Math.floor(sec / 60)).padStart(2, '0') + ":" + String(Math.round(sec % 60)).padStart(2, '0');
                 }
