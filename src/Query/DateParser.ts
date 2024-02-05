@@ -7,7 +7,7 @@ export class DateParser {
         // Using start of day to correctly match on comparison with other dates (like equality).
         return window
             .moment(
-                chrono.parseDate(input, undefined, {
+                chrono.parseDate(input === 'never' ? '2111-11-11' : input, undefined, {
                     forwardDate: forwardDate,
                 }),
             )

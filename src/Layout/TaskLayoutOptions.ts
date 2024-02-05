@@ -13,6 +13,8 @@ export enum TaskLayoutComponent {
     RecurrenceRule = 'recurrenceRule',
     CreatedDate = 'createdDate',
     StartDate = 'startDate',
+    StartTime = 'startTime',
+    TotalTime = 'totalTime',
     ScheduledDate = 'scheduledDate',
     DueDate = 'dueDate',
     CancelledDate = 'cancelledDate',

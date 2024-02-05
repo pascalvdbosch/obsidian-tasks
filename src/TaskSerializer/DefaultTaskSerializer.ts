@@ -23,6 +23,8 @@ export interface DefaultTaskSerializerSymbols {
         None: string;
     };
     readonly startDateSymbol: string;
+    readonly startTimeSymbol: string;
+    readonly totalTimeSymbol: string;
     readonly createdDateSymbol: string;
     readonly scheduledDateSymbol: string;
     readonly dueDateSymbol: string;
@@ -34,6 +36,8 @@ export interface DefaultTaskSerializerSymbols {
     readonly TaskFormatRegularExpressions: {
         priorityRegex: RegExp;
         startDateRegex: RegExp;
+        startTimeRegex: RegExp;
+        totalTimeRegex: RegExp;
         createdDateRegex: RegExp;
         scheduledDateRegex: RegExp;
         dueDateRegex: RegExp;
@@ -60,6 +64,8 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         None: '',
     },
     startDateSymbol: '🛫',
+    startTimeSymbol: '⏱️',
+    totalTimeSymbol: '💰',
     createdDateSymbol: '➕',
     scheduledDateSymbol: '⏳',
     dueDateSymbol: '📅',
@@ -73,6 +79,8 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         // removed from the end until none are left.
         priorityRegex: /([🔺⏫🔼🔽⏬])$/u,
         startDateRegex: /🛫 *(\d{4}-\d{2}-\d{2})$/u,
+        startTimeRegex: /⏱️ *(\d{2}:\d{2})$/u,
+        totalTimeRegex: /💰 *(\d{2}:\d{2})$/u,
         createdDateRegex: /➕ *(\d{4}-\d{2}-\d{2})$/u,
         scheduledDateRegex: /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u,
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
@@ -124,6 +132,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
             // NEW_TASK_FIELD_EDIT_REQUIRED
             prioritySymbols,
             startDateSymbol,
+            startTimeSymbol,
+            totalTimeSymbol,
             createdDateSymbol,
             scheduledDateSymbol,
             doneDateSymbol,
@@ -156,6 +166,16 @@ export class DefaultTaskSerializer implements TaskSerializer {
             }
             case TaskLayoutComponent.StartDate:
                 return symbolAndDateValue(shortMode, startDateSymbol, task.startDate);
+            case TaskLayoutComponent.StartTime:
+                if (!task.startTime) return '';
+                return shortMode
+                    ? ' ' + startTimeSymbol
+                    : ` ${startTimeSymbol} ${task.startTime}`;
+            case TaskLayoutComponent.TotalTime:
+                if (!task.totalTime) return '';
+                return shortMode
+                    ? ' ' + totalTimeSymbol
+                    : ` ${totalTimeSymbol} ${task.totalTime}`;
             case TaskLayoutComponent.CreatedDate:
                 return symbolAndDateValue(shortMode, createdDateSymbol, task.createdDate);
             case TaskLayoutComponent.ScheduledDate:
@@ -225,6 +245,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let matched: boolean;
         let priority: Priority = Priority.None;
         let startDate: Moment | null = null;
+        let startTime: string | null = null;
+        let totalTime: string | null = null;
         let scheduledDate: Moment | null = null;
         let dueDate: Moment | null = null;
         let doneDate: Moment | null = null;
@@ -284,6 +306,20 @@ export class DefaultTaskSerializer implements TaskSerializer {
             if (startDateMatch !== null) {
                 startDate = window.moment(startDateMatch[1], TaskRegularExpressions.dateFormat);
                 line = line.replace(TaskFormatRegularExpressions.startDateRegex, '').trim();
+                matched = true;
+            }
+            
+            const startTimeMatch = line.match(TaskFormatRegularExpressions.startTimeRegex);
+            if (startTimeMatch !== null) {
+                startTime = startTimeMatch[1];
+                line = line.replace(TaskFormatRegularExpressions.startTimeRegex, '').trim();
+                matched = true;
+            }
+
+            const totalTimeMatch = line.match(TaskFormatRegularExpressions.totalTimeRegex);
+            if (totalTimeMatch !== null) {
+                totalTime = totalTimeMatch[1];
+                line = line.replace(TaskFormatRegularExpressions.totalTimeRegex, '').trim();
                 matched = true;
             }
 
@@ -357,6 +393,8 @@ export class DefaultTaskSerializer implements TaskSerializer {
             description: line,
             priority,
             startDate,
+            startTime,
+            totalTime,
             createdDate,
             scheduledDate,
             dueDate,

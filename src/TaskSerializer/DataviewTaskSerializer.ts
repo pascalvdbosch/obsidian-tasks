@@ -69,6 +69,8 @@ export const DATAVIEW_SYMBOLS = {
         None: '',
     },
     startDateSymbol: 'start::',
+    startTimeSymbol: 'startTime::',
+    totalTimeSymbol: 'totalTime::',
     createdDateSymbol: 'created::',
     scheduledDateSymbol: 'scheduled::',
     dueDateSymbol: 'due::',
@@ -80,6 +82,8 @@ export const DATAVIEW_SYMBOLS = {
     TaskFormatRegularExpressions: {
         priorityRegex: toInlineFieldRegex(/priority:: *(highest|high|medium|low|lowest)/),
         startDateRegex: toInlineFieldRegex(/start:: *(\d{4}-\d{2}-\d{2})/),
+        startTimeRegex: toInlineFieldRegex(/startTime:: *(\d{2}:\d{2})/),
+        totalTimeRegex: toInlineFieldRegex(/totalTime:: *(\d{2}:\d{2})/),
         createdDateRegex: toInlineFieldRegex(/created:: *(\d{4}-\d{2}-\d{2})/),
         scheduledDateRegex: toInlineFieldRegex(/scheduled:: *(\d{4}-\d{2}-\d{2})/),
         dueDateRegex: toInlineFieldRegex(/due:: *(\d{4}-\d{2}-\d{2})/),

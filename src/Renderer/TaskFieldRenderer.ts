@@ -160,7 +160,8 @@ const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     scheduledDate: createDateField('task-scheduled', 'taskScheduled'),
     doneDate: createDateField('task-done', 'taskDone'),
     cancelledDate: createDateField('task-cancelled', 'taskCancelled'),
-
+    startTime: new TaskFieldHTMLData('task-start-time', 'taskStartTime', TaskFieldHTMLData.noAttributeValueCalculator), // TODO: is dit correct?
+    totalTime: new TaskFieldHTMLData('task-total-time', 'taskTotalTime', TaskFieldHTMLData.noAttributeValueCalculator),
     priority: new TaskFieldHTMLData('task-priority', 'taskPriority', (_component, task) => {
         return PriorityTools.priorityNameUsingNormal(task.priority).toLocaleLowerCase();
     }),

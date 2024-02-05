@@ -52,6 +52,8 @@ export class Task {
 
     public readonly createdDate: Moment | null;
     public readonly startDate: Moment | null;
+    public readonly startTime: string | null;
+    public readonly totalTime: string | null;
     public readonly scheduledDate: Moment | null;
     public readonly dueDate: Moment | null;
     public readonly doneDate: Moment | null;
@@ -86,6 +88,8 @@ export class Task {
         priority,
         createdDate,
         startDate,
+        startTime,
+        totalTime,
         scheduledDate,
         dueDate,
         doneDate,
@@ -107,6 +111,8 @@ export class Task {
         priority: Priority;
         createdDate: moment.Moment | null;
         startDate: moment.Moment | null;
+        startTime: string | null;
+        totalTime: string | null;
         scheduledDate: moment.Moment | null;
         dueDate: moment.Moment | null;
         doneDate: moment.Moment | null;
@@ -132,6 +138,8 @@ export class Task {
 
         this.createdDate = createdDate;
         this.startDate = startDate;
+        this.startTime = startTime;
+        this.totalTime = totalTime;
         this.scheduledDate = scheduledDate;
         this.dueDate = dueDate;
         this.doneDate = doneDate;
@@ -324,17 +332,25 @@ export class Task {
         }
 
         let newDoneDate = null;
+        let newStartTime = null;
+        let newTotalTime = null;
         if (newStatus.isCompleted()) {
             if (!this.status.isCompleted()) {
                 // Set done date only if setting value is true
                 const { setDoneDate } = getSettings();
                 if (setDoneDate) {
                     newDoneDate = window.moment();
+                    const sec = window.moment().diff(window.moment(this.startTime, 'HH:mm'), 'seconds');
+                    if (sec >= 30)
+                        newTotalTime = String(Math.floor(sec / 60)).padStart(2, '0') + ":" + String(Math.round(sec % 60)).padStart(2, '0');
                 }
             } else {
                 // This task was already completed, so preserve its done date.
                 newDoneDate = this.doneDate;
             }
+        } else {
+            if (newStatus.symbol != " ")
+                newStartTime = window.moment().format('HH:mm');
         }
 
         let newCancelledDate = null;
@@ -367,6 +383,8 @@ export class Task {
             status: newStatus,
             doneDate: newDoneDate,
             cancelledDate: newCancelledDate,
+            startTime: newStartTime,
+            totalTime: newTotalTime
         });
 
         const newTasks: Task[] = [];

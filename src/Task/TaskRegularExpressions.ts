@@ -1,4 +1,5 @@
 export class TaskRegularExpressions {
+    public static readonly timeFormat = 'HH:mm';
     public static readonly dateFormat = 'YYYY-MM-DD';
     public static readonly dateTimeFormat = 'YYYY-MM-DD HH:mm';
 
