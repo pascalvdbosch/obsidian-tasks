@@ -182,6 +182,7 @@ function addDatesSuggestions(
         'next week',
         'next month',
         'next year',
+        'never'
     ];
 
     const results: SuggestInfo[] = [];
