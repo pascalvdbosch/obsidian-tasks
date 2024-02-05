@@ -80,7 +80,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         priorityRegex: /([🔺⏫🔼🔽⏬])$/u,
         startDateRegex: /🛫 *(\d{4}-\d{2}-\d{2})$/u,
         startTimeRegex: /⏱️ *(\d{2}:\d{2})$/u,
-        totalTimeRegex: /💰 *(\d{2}:\d{2})$/u,
+        totalTimeRegex: /💰 *(\d{0,2}h?\d{1,2}m)$/u,
         createdDateRegex: /➕ *(\d{4}-\d{2}-\d{2})$/u,
         scheduledDateRegex: /[⏳⌛] *(\d{4}-\d{2}-\d{2})$/u,
         dueDateRegex: /[📅📆🗓] *(\d{4}-\d{2}-\d{2})$/u,
@@ -168,14 +168,10 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 return symbolAndDateValue(shortMode, startDateSymbol, task.startDate);
             case TaskLayoutComponent.StartTime:
                 if (!task.startTime) return '';
-                return shortMode
-                    ? ' ' + startTimeSymbol
-                    : ` ${startTimeSymbol} ${task.startTime}`;
+                return shortMode ? ' ' + startTimeSymbol : ` ${startTimeSymbol} ${task.startTime}`;
             case TaskLayoutComponent.TotalTime:
                 if (!task.totalTime) return '';
-                return shortMode
-                    ? ' ' + totalTimeSymbol
-                    : ` ${totalTimeSymbol} ${task.totalTime}`;
+                return shortMode ? ' ' + totalTimeSymbol : ` ${totalTimeSymbol} ${task.totalTime}`;
             case TaskLayoutComponent.CreatedDate:
                 return symbolAndDateValue(shortMode, createdDateSymbol, task.createdDate);
             case TaskLayoutComponent.ScheduledDate:
@@ -308,7 +304,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 line = line.replace(TaskFormatRegularExpressions.startDateRegex, '').trim();
                 matched = true;
             }
-            
+
             const startTimeMatch = line.match(TaskFormatRegularExpressions.startTimeRegex);
             if (startTimeMatch !== null) {
                 startTime = startTimeMatch[1];
